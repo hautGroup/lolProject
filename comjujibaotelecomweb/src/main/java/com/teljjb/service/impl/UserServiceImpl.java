@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
         if(user != null) {
             BeanUtilExt.copyProperties(userResult, user);
         } else {
-            throw new BusinessException("9997", "用户不存在");
+            throw new BusinessException(-9997, "用户不存在");
         }
         return userResult;
     }
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
             BusinessException {
         User user = userDao.findUserByNicknameForupdate(nickname);
         if(user != null) {
-            throw new BusinessException("9993", "nickname已存在");
+            throw new BusinessException(-9993, "nickname已存在");
         }
         User user1 = new User();
         user1.setPassword(password);
@@ -57,6 +57,17 @@ public class UserServiceImpl implements UserService {
         UserResult userResult = new UserResult();
         BeanUtilExt.copyProperties(userResult, user1);
         return userResult;
+    }
+
+    @Override
+    public UserResult findUserResultByEmail(String Email)  {
+        User user = userDao.findUserByEmailForupdate(Email);
+        if(user != null) {
+            UserResult userResult = new UserResult();
+            BeanUtilExt.copyProperties(userResult, user);
+            return userResult;
+        }
+        return null;
     }
 
     @Override

@@ -143,12 +143,25 @@
         user
         WHERE
         nickname = #{nickname}
+        for update
     </select>
+
+	<select id="findUserByEmailForupdate" resultMap="BASE-RESULT">
+		SELECT
+		*
+		FROM
+		user
+		WHERE
+		email = #{email}
+		for update
+	</select>
 
     <update id="updateHeadImage">
         update user set head_image = #{headImage}
         where id = #{userId}
     </update>
+
+
   	 
   	 
 </mapper>

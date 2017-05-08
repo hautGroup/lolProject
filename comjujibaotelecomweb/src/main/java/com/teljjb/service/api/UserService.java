@@ -10,8 +10,13 @@ public interface UserService {
 
     UserResult findUserResultById(Integer id) throws BusinessException;
 
+    UserResult findUserResultByEmail(String Email);
+
     UserResult register(String nickname, String phonenumber, String email, String password, String ip) throws
             BusinessException;
+
+
+
 
     /**
      * 上传头像

@@ -9,7 +9,7 @@ public class BaseResponse<T> implements Serializable {
 
 	private String msg = "";
 
-	private String code = "00";
+	private Integer code = 1;
 
 	
 	private T data;
@@ -26,7 +26,7 @@ public class BaseResponse<T> implements Serializable {
 		this.data = result;
 	}
 
-	public BaseResponse(String message, String code, boolean isSuccess, T result) {
+	public BaseResponse(String message, Integer code, boolean isSuccess, T result) {
 		super();
 		this.msg = message;
 		this.code = code;
@@ -41,11 +41,11 @@ public class BaseResponse<T> implements Serializable {
 		this.msg = message;
 	}
 
-	public String getCode() {
+	public Integer getCode() {
 		return code;
 	}
 
-	public void setCode(String code) {
+	public void setCode(Integer code) {
 		this.code = code;
 	}
 

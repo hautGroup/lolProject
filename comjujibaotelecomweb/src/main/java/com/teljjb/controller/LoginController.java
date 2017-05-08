@@ -4,6 +4,7 @@ import com.teljjb.exception.BusinessException;
 import com.teljjb.response.BaseResponse;
 import com.teljjb.result.UserResult;
 import com.teljjb.service.api.UserService;
+import com.teljjb.util.EmailRegexUtil;
 import com.teljjb.util.ErrorCode;
 import com.teljjb.util.IpUtil;
 import org.apache.commons.lang.StringUtils;
@@ -39,22 +40,22 @@ public class LoginController extends BaseController {
         String email = request.getParameter("email");
         String nickname = request.getParameter("nickname");
         if(StringUtils.isEmpty(mobile) ) {
-            mapiResult.setCode("9997");
+            mapiResult.setCode(-9997);
             mapiResult.setMessage("手机号不正确");
             return mapiResult;
         }
         if(StringUtils.isEmpty(password) ) {
-            mapiResult.setCode("9996");
+            mapiResult.setCode(-9996);
             mapiResult.setMessage("密码不正确");
             return mapiResult;
         }
-        if(StringUtils.isEmpty(email) ) {
-            mapiResult.setCode("9995");
+        if(StringUtils.isEmpty(email) || !EmailRegexUtil.checkEmaile(email) || userService.findUserResultByEmail(email) != null) {
+            mapiResult.setCode(-9995);
             mapiResult.setMessage("电子邮箱不正确");
             return mapiResult;
         }
         if(StringUtils.isEmpty(nickname) ) {
-            mapiResult.setCode("9994");
+            mapiResult.setCode(-9994);
             mapiResult.setMessage("昵称不正确");
             return mapiResult;
         }
@@ -71,6 +72,34 @@ public class LoginController extends BaseController {
         }
         return mapiResult;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/validateEmail")
+    public BaseResponse<String> validateEmail(HttpServletRequest request, HttpServletResponse response) {
+        String email = request.getParameter("email");
+        BaseResponse<String> mapiResult = new BaseResponse<>();
+        if(StringUtils.isEmpty(email) ) {
+            mapiResult.setCode(-1);
+            mapiResult.setMessage("邮箱地址不能为空");
+            return mapiResult;
+        }
+        if(!EmailRegexUtil.checkEmaile(email)) {
+            mapiResult.setCode(-2);
+            mapiResult.setMessage("邮箱地址格式不正确");
+            return mapiResult;
+        }
+
+        UserResult user = userService.findUserResultByEmail(email);
+        if(user != null) {
+            mapiResult.setCode(-3);
+            mapiResult.setMessage("邮箱地址已经被注册");
+            return mapiResult;
+        }
+
+        return mapiResult;
+    }
+
+
 
 
     @SuppressWarnings("rawtypes")
@@ -93,10 +122,10 @@ public class LoginController extends BaseController {
                     "headImage");
             Boolean status = userService.uploadHeadImage(headImageUrl, userId);
             if (status == true) {
-                mapiResult.setCode("00");
+                mapiResult.setCode(0);
                 mapiResult.setResult(headImageUrl);
             } else {
-                mapiResult.setCode("01");
+                mapiResult.setCode(1);
                 mapiResult.setMessage("更新头像失败");
             }
             return mapiResult;

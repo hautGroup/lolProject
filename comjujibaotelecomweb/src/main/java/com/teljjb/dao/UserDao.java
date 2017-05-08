@@ -22,6 +22,8 @@ public interface UserDao {
 
 	public User findUserById(Integer id);
 
+	public User findUserByEmailForupdate(String email);
+
 	public User findUserByNicknameForupdate(String nickname);
 
 	public Integer insert(User param);
