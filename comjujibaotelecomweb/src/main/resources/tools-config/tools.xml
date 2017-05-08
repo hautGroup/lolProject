@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<tools>
+	<toolbox scope="application">
+		<tool class="com.teljjb.util.StringTool" />
+	</toolbox>
+	<!--<data type="string" key="staticDomain" value="${static.url}" />-->
+	<!--<data type="string" key="jjbDomain" value="${jjb.domain}" />-->
+	<!--<data type="string" key="kqDomain" value="${SSL_HOST}" />-->
+</tools>

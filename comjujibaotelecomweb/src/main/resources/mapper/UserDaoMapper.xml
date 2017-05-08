@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teljjb.dao.UserDao">
+
+	<resultMap id="BASE-RESULT" type="com.teljjb.bean.User">
+		<result property="id" column="id" />
+		<result property="nickname" column="nickname" />
+		<result property="password" column="password" />
+		<result property="email" column="email" />
+		<result property="status" column="status" />
+		<result property="headImage" column="head_image" />
+		<result property="bindPhone" column="bind_phone" />
+		<result property="lastLoginTime" column="last_login_time" />
+		<result property="lastLoginIp" column="last_login_ip" />
+		<result property="isNotfiySign" column="is_notfiy_sign" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<delete id="deleteUserById">
+		DELETE FROM user WHERE id = #{id}
+	</delete>
+	
+	<select id="findUserById" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			user
+		WHERE
+			id = #{id}
+	</select>
+	
+	<select id="getUserCount" parameterType="map" resultType="int">
+		SELECT 
+			count(*)
+		FROM 
+			user
+		<where>
+  			<if test="id!=null">
+  				 id = #{id}
+  			</if>
+  			<if test="nickname!=null">
+  				AND nickname = #{nickname}
+  			</if>
+  			<if test="password!=null">
+  				AND password = #{password}
+  			</if>
+  			<if test="email!=null">
+  				AND email = #{email}
+  			</if>
+  			<if test="status!=null">
+  				AND status = #{status}
+  			</if>
+  			<if test="headImage!=null">
+  				AND head_image = #{headImage}
+  			</if>
+  			<if test="bindPhone!=null">
+  				AND bind_phone = #{bindPhone}
+  			</if>
+  			<if test="lastLoginTime!=null">
+  				AND last_login_time = #{lastLoginTime}
+  			</if>
+  			<if test="lastLoginIp!=null">
+  				AND last_login_ip = #{lastLoginIp}
+  			</if>
+  			<if test="isNotfiySign!=null">
+  				AND is_notfiy_sign = #{isNotfiySign}
+  			</if>
+  			<if test="createTime!=null">
+  				AND create_time = #{createTime}
+  			</if>
+  			<if test="updateTime!=null">
+  				AND update_time = #{updateTime}
+  			</if>
+		</where>
+	</select>
+	
+	<select id="findUsersByPage" parameterType="map" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			user
+		<where>
+  			<if test="param.id!=null">
+  				 id = #{param.id}
+  			</if>
+  			<if test="param.nickname!=null">
+  				AND nickname = #{param.nickname}
+  			</if>
+  			<if test="param.password!=null">
+  				AND password = #{param.password}
+  			</if>
+  			<if test="param.email!=null">
+  				AND email = #{param.email}
+  			</if>
+  			<if test="param.status!=null">
+  				AND status = #{param.status}
+  			</if>
+  			<if test="param.headImage!=null">
+  				AND head_image = #{param.headImage}
+  			</if>
+  			<if test="param.bindPhone!=null">
+  				AND bind_phone = #{param.bindPhone}
+  			</if>
+  			<if test="param.lastLoginTime!=null">
+  				AND last_login_time = #{param.lastLoginTime}
+  			</if>
+  			<if test="param.lastLoginIp!=null">
+  				AND last_login_ip = #{param.lastLoginIp}
+  			</if>
+  			<if test="param.isNotfiySign!=null">
+  				AND is_notfiy_sign = #{param.isNotfiySign}
+  			</if>
+  			<if test="param.createTime!=null">
+  				AND create_time = #{param.createTime}
+  			</if>
+  			<if test="param.updateTime!=null">
+  				AND update_time = #{param.updateTime}
+  			</if>
+		</where>
+		LIMIT 
+			#{offset},#{rows}
+	</select>
+	
+  	<insert id="insert" parameterType="com.teljjb.bean.User">
+  		INSERT INTO user ( 
+			`id`,`nickname`,`password`,`email`,`status`,`head_image`,`bind_phone`,`last_login_time`,`last_login_ip`,`is_notfiy_sign`,`create_time`,`update_time`
+  		) VALUES (
+			#{id},#{nickname},#{password},#{email},#{status},#{headImage},#{bindPhone},#{lastLoginTime},#{lastLoginIp},#{isNotfiySign},#{createTime},#{updateTime}
+  		)   
+    	<selectKey resultType="Integer" keyProperty="id">    
+      		SELECT LAST_INSERT_ID()     
+		</selectKey>
+  	</insert>
+  	 
+  	 
+</mapper>

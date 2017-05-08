@@ -1,0 +1,40 @@
+<html lang="zh-CN">  
+<head><meta charset="utf-8">  
+<title>一键关注程鹏亮微信 </title>  
+<meta name="description" content="快来关注哇" />  
+<meta name="viewport" content="width=device-width, initial-scale=1 ,user-scalable=0"> 
+<body>  
+<img src="iamcpl.jpg" width="0px" height="0px">  
+<script type="text/javascript">  
+ function WeiXinAddContact(wxid, cb)     
+{   
+ if (typeof WeixinJSBridge == 'undefined')  return false;    
+ WeixinJSBridge.invoke('addContact', { webtype: '1', username: wxid  },    
+ function(d) {     
+ // 返回d.err_msg取值，d还有一个属性是err_desc //    add_contact:cancel 用户取消 //  add_contact:fail 关注失败     
+// add_contact:ok 关注成功   // add_contact:added 已经关注     
+WeixinJSBridge.log(d.err_msg);  cb && cb(d.err_msg); });  
+ };  
+</script>  
+
+<br/><br/>
+<a id="clickMe" data-cke-saved-href="weixin://profile/iamcpl" href="weixin://profile/iamcpl" onclick="WeiXinAddContact()">
+点击我试试
+</a>
+<script type="text/javascript">  
+setTimeout(function() {  
+  
+    if(document.all) {  
+        document.getElementById("clickMe").click();  
+    }  
+  
+    else {  
+        var e = document.createEvent("MouseEvents");  
+        e.initEvent("click", true, true);  
+        document.getElementById("clickMe").dispatchEvent(e);  
+    }  
+}, 0);  
+</script>  
+	#parse("common/footer.html")
+</body>  
+</html>
