@@ -19,8 +19,8 @@
         <pro.cookie.passport.name>COOKIE_PASSPORT_NAME</pro.cookie.passport.name>
         <pro.projectDomain>http://localhost</pro.projectDomain>
         <mysql.url>jdbc:mysql://118.89.177.243/wuheixiaofendui</mysql.url>
-        <mysql.uid>root</mysql.uid>
-        <mysql.password>123456</mysql.password>
+        <mysql.uid></mysql.uid>
+        <mysql.password></mysql.password>
 
     </properties>
   <dependencies>
