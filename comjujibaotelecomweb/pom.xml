@@ -18,7 +18,7 @@
         <pro.cookie.client.name>COOKIE_SYS_NAME</pro.cookie.client.name>
         <pro.cookie.passport.name>COOKIE_PASSPORT_NAME</pro.cookie.passport.name>
         <pro.projectDomain>http://localhost</pro.projectDomain>
-        <mysql.url>jdbc:mysql://127.0.0.1:3306/wuheixiaofendui</mysql.url>
+        <mysql.url>jdbc:mysql://118.89.177.243/wuheixiaofendui</mysql.url>
         <mysql.uid>root</mysql.uid>
         <mysql.password>123456</mysql.password>
 
@@ -206,6 +206,14 @@
                           <maxIdleTime>30000</maxIdleTime>
                       </connector>
                   </connectors>
+              </configuration>
+          </plugin>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <configuration>
+                  <source>1.6</source>
+                  <target>1.6</target>
               </configuration>
           </plugin>
       </plugins>

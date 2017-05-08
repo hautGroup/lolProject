@@ -1,8 +1,10 @@
 package com.teljjb.controller;
 
+import com.teljjb.exception.BusinessException;
 import com.teljjb.response.BaseResponse;
 import com.teljjb.result.UserResult;
 import com.teljjb.service.api.UserService;
+import com.teljjb.util.ErrorCode;
 import com.teljjb.util.PropertiesHelp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -77,7 +79,17 @@ public class HomeController extends BaseController {
     public BaseResponse<UserResult> horseracelamp(HttpServletRequest request, HttpServletResponse
             response, @RequestParam(required = false, defaultValue = "1") int id) {
         BaseResponse<UserResult> mapiResult = new BaseResponse<UserResult>();
-        UserResult userResult = userService.findUserResultById(id);
+        UserResult userResult = null;
+        try {
+            userResult = userService.findUserResultById(id);
+        } catch (BusinessException e) {
+            mapiResult.setCode(e.getCode());
+            mapiResult.setMessage(e.getMessage());
+        } catch (Exception e) {
+            LOG.error("系统出错[HomeController.horseracelamp]," , e);
+            mapiResult.setCode(ErrorCode.UNKONE_ERROR);
+            mapiResult.setMessage(ErrorCode.UNKONE_ERROR_MSG);
+        }
         mapiResult.setResult(userResult);
         return mapiResult;
     }

@@ -134,6 +134,16 @@
       		SELECT LAST_INSERT_ID()     
 		</selectKey>
   	</insert>
+
+
+    <select id="findUserByNicknameForupdate" resultMap="BASE-RESULT">
+        SELECT
+        *
+        FROM
+        user
+        WHERE
+        nickname = #{nickname}
+    </select>
   	 
   	 
 </mapper>

@@ -1,5 +1,6 @@
 package com.teljjb.service.api;
 
+import com.teljjb.exception.BusinessException;
 import com.teljjb.result.UserResult;
 
 /**
@@ -7,6 +8,8 @@ import com.teljjb.result.UserResult;
  */
 public interface UserService {
 
-    UserResult findUserResultById(Integer id);
+    UserResult findUserResultById(Integer id) throws BusinessException;
+
+    UserResult register(String nickname, String phonenumber, String email, String password) throws BusinessException;
 
 }

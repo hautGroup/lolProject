@@ -21,7 +21,9 @@ import java.util.List;
 public interface UserDao {
 
 	public User findUserById(Integer id);
-	
+
+	public User findUserByNicknameForupdate(String nickname);
+
 	public Integer insert(User param);
 	
 	public Integer getUserCount(User param);
