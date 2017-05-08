@@ -52,6 +52,8 @@
 		<property name="resourceLoaderPath" value="/WEB-INF/velocityTemplates/" />
 	</bean>
 
+    <bean id="shopImageHandler" class="com.teljjb.util.ShopImageHandler"></bean>
+
 	<!--<mvc:interceptors>-->
 		<!--<mvc:interceptor>-->
 			<!--<mvc:mapping path="/**" />-->

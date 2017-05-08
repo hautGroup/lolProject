@@ -1,20 +1,23 @@
 package com.teljjb.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.teljjb.exception.BusinessException;
 import com.teljjb.response.BaseResponse;
 import com.teljjb.result.UserResult;
 import com.teljjb.service.api.UserService;
 import com.teljjb.util.ErrorCode;
+import com.teljjb.util.IpUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 
 /**
  * Created by dezhonger on 2017/5/8.
@@ -25,11 +28,12 @@ public class LoginController extends BaseController {
     @Autowired
     private UserService userService;
 
+
     @ResponseBody
     @RequestMapping(value = {"/register/post"})
     public BaseResponse<UserResult> registMobile(ModelMap modelMap, HttpServletRequest request,
                                                  HttpServletResponse response) {
-        BaseResponse<UserResult> mapiResult = new BaseResponse<UserResult>();
+        BaseResponse<UserResult> mapiResult = new BaseResponse<>();
         String mobile = request.getParameter("mobile");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
@@ -40,22 +44,22 @@ public class LoginController extends BaseController {
             return mapiResult;
         }
         if(StringUtils.isEmpty(password) ) {
-            mapiResult.setCode("9997");
+            mapiResult.setCode("9996");
             mapiResult.setMessage("密码不正确");
             return mapiResult;
         }
         if(StringUtils.isEmpty(email) ) {
-            mapiResult.setCode("9997");
+            mapiResult.setCode("9995");
             mapiResult.setMessage("电子邮箱不正确");
             return mapiResult;
         }
         if(StringUtils.isEmpty(nickname) ) {
-            mapiResult.setCode("9997");
+            mapiResult.setCode("9994");
             mapiResult.setMessage("昵称不正确");
             return mapiResult;
         }
         try {
-            UserResult result = userService.register(nickname, mobile, email, password);
+            UserResult result = userService.register(nickname, mobile, email, password, IpUtil.getIp(request));
             mapiResult.setResult(result);
         } catch (BusinessException e) {
             mapiResult.setCode(e.getCode());
@@ -67,4 +71,54 @@ public class LoginController extends BaseController {
         }
         return mapiResult;
     }
+
+
+    @SuppressWarnings("rawtypes")
+    @ResponseBody
+    @RequestMapping(value = "/upHeadImage")
+    // , method = { RequestMethod.POST }
+    public BaseResponse uploadHeadImage(@RequestParam("uploadFile") MultipartFile uploadFile,
+                                        ModelMap modelMap, HttpServletRequest request,
+                                        HttpServletResponse response) {
+        BaseResponse mapiResult = new BaseResponse();
+        try {
+            Integer userId = this.getCurrUserId(request);
+            LOG.info("上传头像,userId=" + userId + ",contentType=" + uploadFile.getContentType()
+                    + ",filename=" + uploadFile.getOriginalFilename());
+            // String realFileName = uploadFile.getOriginalFilename();
+            InputStream file = uploadFile.getInputStream();
+            // String headImageUrl = uploadOSSFile("headImage/", fileName,
+            // uploadFile);
+            String headImageUrl = shopImageHandler.uploadImage(file, true, request, 90, 90,
+                    "headImage");
+            Boolean status = userService.uploadHeadImage(headImageUrl, userId);
+            if (status == true) {
+                mapiResult.setCode("00");
+                mapiResult.setResult(headImageUrl);
+            } else {
+                mapiResult.setCode("01");
+                mapiResult.setMessage("更新头像失败");
+            }
+            return mapiResult;
+        } catch (BusinessException e) {
+            mapiResult.setCode(e.getCode());
+            mapiResult.setMessage(e.getMessage());
+        } catch (Exception e) {
+            LOG.error("系统出错[LoginController.uploadHeadImage]", e);
+            mapiResult.setCode(ErrorCode.UNKONE_ERROR);
+            mapiResult.setMessage(ErrorCode.UNKONE_ERROR_MSG);
+        }
+        return mapiResult;
+
+    }
+
+
+
+
+
+
+
+
+
+
 }

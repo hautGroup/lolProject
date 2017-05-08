@@ -32,4 +32,7 @@ public interface UserDao {
 	
 	//if not use,pls delete it
 	public Integer deleteUserById(Integer id);
+
+
+    public Integer updateHeadImage(@Param("userId") Integer userId, @Param("headImage") String headImage);
 }

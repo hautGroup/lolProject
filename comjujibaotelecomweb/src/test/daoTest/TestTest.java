@@ -41,7 +41,7 @@ public class TestTest {
 //        userDao.insert(user1);
         User user = userDao.findUserById(1);
         System.out.println(user);
-        System.out.println(userService.findUserResultById(1));
+//        System.out.println(userService.findUserResultById(1));
     }
 
 

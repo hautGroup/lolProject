@@ -144,6 +144,11 @@
         WHERE
         nickname = #{nickname}
     </select>
+
+    <update id="updateHeadImage">
+        update user set head_image = #{headImage}
+        where id = #{userId}
+    </update>
   	 
   	 
 </mapper>

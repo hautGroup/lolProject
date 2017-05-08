@@ -4,6 +4,7 @@ import com.teljjb.exception.BusinessException;
 import com.teljjb.response.BaseResponse;
 import com.teljjb.result.UserResult;
 import com.teljjb.service.api.UserService;
+import com.teljjb.util.ControllerUtil;
 import com.teljjb.util.ErrorCode;
 import com.teljjb.util.PropertiesHelp;
 import org.springframework.beans.factory.annotation.Autowired;

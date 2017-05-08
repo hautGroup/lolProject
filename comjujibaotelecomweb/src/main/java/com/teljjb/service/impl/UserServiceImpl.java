@@ -35,10 +35,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserResult register(String nickname, String phonenumber, String email, String password) throws BusinessException {
+    public UserResult register(String nickname, String phonenumber, String email, String password, String ip) throws
+            BusinessException {
         User user = userDao.findUserByNicknameForupdate(nickname);
         if(user != null) {
-            throw new BusinessException("nickname已存在");
+            throw new BusinessException("9993", "nickname已存在");
         }
         User user1 = new User();
         user1.setPassword(password);
@@ -48,7 +49,7 @@ public class UserServiceImpl implements UserService {
         user1.setEmail(email);
         user1.setHeadImage("");
         user1.setIsNotfiySign("N");
-        user1.setLastLoginIp("127.0.0.1");
+        user1.setLastLoginIp(ip);
         user1.setLastLoginTime(new Date());
         user1.setNickname(nickname);
         user1.setStatus("active");
@@ -56,5 +57,14 @@ public class UserServiceImpl implements UserService {
         UserResult userResult = new UserResult();
         BeanUtilExt.copyProperties(userResult, user1);
         return userResult;
+    }
+
+    @Override
+    public Boolean uploadHeadImage(String headImage, Integer userId) throws BusinessException {
+        if (userDao.updateHeadImage(userId, headImage) > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
