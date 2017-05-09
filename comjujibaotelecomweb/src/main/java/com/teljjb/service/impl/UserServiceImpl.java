@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
         user1.setLastLoginIp(ip);
         user1.setLastLoginTime(new Date());
         user1.setNickname(nickname);
-        user1.setStatus("active");
+        user1.setStatus("lock");
         userDao.insert(user1);
         UserResult userResult = new UserResult();
         BeanUtilExt.copyProperties(userResult, user1);

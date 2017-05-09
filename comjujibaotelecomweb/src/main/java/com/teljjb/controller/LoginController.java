@@ -7,6 +7,7 @@ import com.teljjb.service.api.UserService;
 import com.teljjb.util.EmailRegexUtil;
 import com.teljjb.util.ErrorCode;
 import com.teljjb.util.IpUtil;
+import com.teljjb.util.JavaMailUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -62,6 +63,7 @@ public class LoginController extends BaseController {
         try {
             UserResult result = userService.register(nickname, mobile, email, password, IpUtil.getIp(request));
             mapiResult.setResult(result);
+            JavaMailUtil.sendForActive(email, result);
         } catch (BusinessException e) {
             mapiResult.setCode(e.getCode());
             mapiResult.setMessage(e.getMessage());
