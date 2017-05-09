@@ -91,7 +91,7 @@ public final class JavaMailUtil {
     public static MimeMessage createMimeMessage(Session session, String sendMail, String receiveMail, UserResult user)
             throws Exception {
         String code = MD5Util.getMD5Str("lol" + user.getNickname() + user.getId() + "lol");
-        String url = "http://www.dynacno.com/active/account?nickname="+user.getNickname()+"&code="+code;
+        String url = PropertiesHelp.getProperty("projectDomain")+"/active/account?nickname="+user.getNickname()+"&code="+code;
 
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(sendMail, "五黑小分队项目", "UTF-8"));

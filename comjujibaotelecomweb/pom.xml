@@ -14,16 +14,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>4.3.0.RELEASE</spring.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <pro.cookie.domain>51jujibao.com</pro.cookie.domain>
+        <pro.cookie.domain>localhost</pro.cookie.domain>
         <pro.cookie.client.name>COOKIE_SYS_NAME</pro.cookie.client.name>
         <pro.cookie.passport.name>COOKIE_PASSPORT_NAME</pro.cookie.passport.name>
         <pro.projectDomain>http://localhost</pro.projectDomain>
         <!--<mysql.url>jdbc:mysql://118.89.177.243/wuheixiaofendui</mysql.url>-->
         <!--<mysql.url>jdbc:mysql://118.89.177.243/wuheixiaofendui?characterEncoding=utf8&amp;useSSL=true</mysql.url>-->
-        <mysql.url><![CDATA[jdbc:mysql://118.89.177.243:3306/wuheixiaofendui?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull]]></mysql.url>
+        <mysql.url><![CDATA[jdbc:mysql://127.0.0.1:3306/wuheixiaofendui?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull]]></mysql.url>
         <mysql.uid>root</mysql.uid>
-        <mysql.password>xxxxxx</mysql.password>
-
+        <mysql.password>123456</mysql.password>
     </properties>
   <dependencies>
       <dependency>
@@ -266,20 +265,23 @@
             <id>uat</id>
             <properties>
                 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-                <pro.cookie.domain>51jujibao.com</pro.cookie.domain>
+                <pro.cookie.domain>dynacno.com</pro.cookie.domain>
                 <pro.cookie.client.name>COOKIE_SYS_NAME</pro.cookie.client.name>
                 <pro.cookie.passport.name>COOKIE_PASSPORT_NAME</pro.cookie.passport.name>
-                <pro.projectDomain>http://localhost</pro.projectDomain>
+                <pro.projectDomain>http://www.dynacno.com</pro.projectDomain>
+                <mysql.url><![CDATA[jdbc:mysql://118.89.177.243:3306/wuheixiaofendui?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull]]></mysql.url>
+                <mysql.uid>root</mysql.uid>
+                <mysql.password>xxxxxx</mysql.password>
             </properties>
         </profile>
         <profile>
             <id>dezhonger</id>
             <properties>
                 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-                <pro.cookie.domain>51jujibao.com</pro.cookie.domain>
+                <pro.cookie.domain>localhost</pro.cookie.domain>
                 <pro.cookie.client.name>COOKIE_SYS_NAME</pro.cookie.client.name>
                 <pro.cookie.passport.name>COOKIE_PASSPORT_NAME</pro.cookie.passport.name>
-                <pro.projectDomain>http://test.dezhonger.com</pro.projectDomain>
+                <pro.projectDomain>http://localhost</pro.projectDomain>
             </properties>
         </profile>
 
