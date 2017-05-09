@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +32,7 @@ public class LoginController extends BaseController {
 
     /**
      * 注册
+     *
      * @param modelMap
      * @param request
      * @param response
@@ -45,22 +47,22 @@ public class LoginController extends BaseController {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         String nickname = request.getParameter("nickname");
-        if(StringUtils.isEmpty(mobile) ) {
+        if (StringUtils.isEmpty(mobile)) {
             mapiResult.setCode(-9997);
             mapiResult.setMessage("手机号不正确");
             return mapiResult;
         }
-        if(StringUtils.isEmpty(password) ) {
+        if (StringUtils.isEmpty(password)) {
             mapiResult.setCode(-9996);
             mapiResult.setMessage("密码不正确");
             return mapiResult;
         }
-        if(StringUtils.isEmpty(email) || !EmailRegexUtil.checkEmaile(email) || userService.findUserResultByEmail(email) != null) {
+        if (StringUtils.isEmpty(email) || !EmailRegexUtil.checkEmaile(email) || userService.findUserResultByEmail(email) != null) {
             mapiResult.setCode(-9995);
             mapiResult.setMessage("电子邮箱不正确");
             return mapiResult;
         }
-        if(StringUtils.isEmpty(nickname) ) {
+        if (StringUtils.isEmpty(nickname)) {
             mapiResult.setCode(-9994);
             mapiResult.setMessage("昵称不正确");
             return mapiResult;
@@ -73,7 +75,7 @@ public class LoginController extends BaseController {
             mapiResult.setCode(e.getCode());
             mapiResult.setMessage(e.getMessage());
         } catch (Exception e) {
-            LOG.error("系统出错[LoginController.registMobile],params : " + mobile+","+password+",smsCode" , e);
+            LOG.error("系统出错[LoginController.registMobile],params : " + mobile + "," + password + ",smsCode", e);
             mapiResult.setCode(ErrorCode.UNKONE_ERROR);
             mapiResult.setMessage(ErrorCode.UNKONE_ERROR_MSG);
         }
@@ -82,6 +84,7 @@ public class LoginController extends BaseController {
 
     /**
      * 邮箱验证
+     *
      * @param request
      * @param response
      * @return 是否成功
@@ -91,19 +94,19 @@ public class LoginController extends BaseController {
     public BaseResponse<String> validateEmail(HttpServletRequest request, HttpServletResponse response) {
         String email = request.getParameter("email");
         BaseResponse<String> mapiResult = new BaseResponse<>();
-        if(StringUtils.isEmpty(email) ) {
+        if (StringUtils.isEmpty(email)) {
             mapiResult.setCode(-1);
             mapiResult.setMessage("邮箱地址不能为空");
             return mapiResult;
         }
-        if(!EmailRegexUtil.checkEmaile(email)) {
+        if (!EmailRegexUtil.checkEmaile(email)) {
             mapiResult.setCode(-2);
             mapiResult.setMessage("邮箱地址格式不正确");
             return mapiResult;
         }
 
         UserResult user = userService.findUserResultByEmail(email);
-        if(user != null) {
+        if (user != null) {
             mapiResult.setCode(-3);
             mapiResult.setMessage("邮箱地址已经被注册");
             return mapiResult;
@@ -114,6 +117,7 @@ public class LoginController extends BaseController {
 
     /**
      * 邮箱激活账号
+     *
      * @param request
      * @param response
      * @return 激活成功的用户信息
@@ -126,16 +130,16 @@ public class LoginController extends BaseController {
         UserResult userResult = userService.findUserResultByNickname(nickname);
         BaseResponse<UserResult> mapiResult = new BaseResponse<>();
         mapiResult.setResult(userResult);
-        if(userResult == null) {
+        if (userResult == null) {
             mapiResult.setCode(-1);
             mapiResult.setMessage("无效的链接");
         } else {
             String code2 = MD5Util.getMD5Str("lol" + nickname + userResult.getId() + "lol");
-            if(!code2.equals(code)) {
+            if (!code2.equals(code)) {
                 mapiResult.setCode(-1);
                 mapiResult.setMessage("激活失败");
             } else {
-                if(userService.activeAccount(userResult.getId(), "active") > 0) {
+                if (userService.activeAccount(userResult.getId(), "active") > 0) {
                     mapiResult.setCode(1);
                     mapiResult.setMessage("激活成功");
                 } else {
@@ -149,7 +153,7 @@ public class LoginController extends BaseController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public BaseResponse<UserResult> login(HttpServletRequest request, HttpServletResponse response) {
         BaseResponse<UserResult> mapiResult = new BaseResponse<>();
         UserResult userResult = new UserResult();
@@ -162,7 +166,7 @@ public class LoginController extends BaseController {
             mapiResult.setCode(e.getCode());
             mapiResult.setMessage(e.getMessage());
         } catch (Exception e) {
-            LOG.error("系统出错[LoginController.login],params : " , e);
+            LOG.error("系统出错[LoginController.login],params : ", e);
             mapiResult.setCode(ErrorCode.UNKONE_ERROR);
             mapiResult.setMessage(ErrorCode.UNKONE_ERROR_MSG);
         }
@@ -208,14 +212,6 @@ public class LoginController extends BaseController {
         return mapiResult;
 
     }
-
-
-
-
-
-
-
-
 
 
 }

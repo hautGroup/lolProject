@@ -38,7 +38,7 @@ public class UtilController extends BaseController {
     @ResponseBody
     @RequestMapping(value = {"/sendmail"})
     public BaseResponse<String> sendmail(ModelMap modelMap, HttpServletRequest request,
-                                   HttpServletResponse response) {
+                                         HttpServletResponse response) {
         BaseResponse<String> re = new BaseResponse<>();
         String email = request.getParameter("mail");
         String nickname = request.getParameter("nickname");
@@ -54,8 +54,6 @@ public class UtilController extends BaseController {
         }
         return re;
     }
-
-
 
 
 }

@@ -4,7 +4,6 @@ import com.teljjb.exception.BusinessException;
 import com.teljjb.response.BaseResponse;
 import com.teljjb.result.UserResult;
 import com.teljjb.service.api.UserService;
-import com.teljjb.util.ControllerUtil;
 import com.teljjb.util.ErrorCode;
 import com.teljjb.util.PropertiesHelp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +86,7 @@ public class HomeController extends BaseController {
             mapiResult.setCode(e.getCode());
             mapiResult.setMessage(e.getMessage());
         } catch (Exception e) {
-            LOG.error("系统出错[HomeController.horseracelamp]," , e);
+            LOG.error("系统出错[HomeController.horseracelamp],", e);
             mapiResult.setCode(ErrorCode.UNKONE_ERROR);
             mapiResult.setMessage(ErrorCode.UNKONE_ERROR_MSG);
         }

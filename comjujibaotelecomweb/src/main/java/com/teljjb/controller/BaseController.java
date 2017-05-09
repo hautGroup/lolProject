@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class BaseController {
 
-    public static final Logger LOG				= Logger.getLogger(BaseController.class);
+    public static final Logger LOG = Logger.getLogger(BaseController.class);
 
     @Autowired
     protected ShopImageHandler shopImageHandler;
@@ -71,51 +71,51 @@ public class BaseController {
     }
 
     public void asynOutResult(HttpServletRequest request,
-                              HttpServletResponse response,String result){
+                              HttpServletResponse response, String result) {
         PrintWriter out;
         try {
             out = response.getWriter();
-            String  callback = request.getParameter("callback");
+            String callback = request.getParameter("callback");
 
-            LOG.info("callback:"+callback);
+            LOG.info("callback:" + callback);
 
-            String jsoncallback="";
-            if(StringUtils.isEmpty(callback)){
-                jsoncallback=result;
-            }else{
-                jsoncallback = callback + "("+result+")";
+            String jsoncallback = "";
+            if (StringUtils.isEmpty(callback)) {
+                jsoncallback = result;
+            } else {
+                jsoncallback = callback + "(" + result + ")";
             }
             out.print(jsoncallback);
             out.flush();
             out.close();
         } catch (IOException e) {
-            LOG.error("BaseController.asynOutResult error: ",e);
+            LOG.error("BaseController.asynOutResult error: ", e);
         }
 
     }
 
-    public List<String> uploadMutiFile(HttpServletRequest request) throws Exception{
+    public List<String> uploadMutiFile(HttpServletRequest request) throws Exception {
         List<String> imgUrls = new ArrayList<>();
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
         //判断 request 是否有文件上传,即多部分请求
-        if(multipartResolver.isMultipart(request)){
+        if (multipartResolver.isMultipart(request)) {
             //转换成多部分request
-            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;
+            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
             //取得request中的所有文件名
             Iterator<String> iter = multiRequest.getFileNames();
-            while(iter.hasNext()){
+            while (iter.hasNext()) {
                 //记录上传过程起始时的时间，用来计算上传时间
                 int pre = (int) System.currentTimeMillis();
                 //取得上传文件
                 MultipartFile file = multiRequest.getFile(iter.next());
-                if(file != null){
+                if (file != null) {
                     InputStream in = file.getInputStream();
-                    String imgUrl = shopImageHandler.uploadImage(in,true,request,null,null,null);
+                    String imgUrl = shopImageHandler.uploadImage(in, true, request, null, null, null);
                     imgUrls.add(imgUrl);
                 }
                 //记录上传该文件后的时间
                 int finaltime = (int) System.currentTimeMillis();
-                LOG.info("uploadMutiFile times : "+ (finaltime - pre));
+                LOG.info("uploadMutiFile times : " + (finaltime - pre));
             }
 
         }
@@ -123,10 +123,9 @@ public class BaseController {
     }
 
 
-
-    public Integer getCurrUserId(HttpServletRequest request){
+    public Integer getCurrUserId(HttpServletRequest request) {
         String userId = SiteContextThreadLocal.get().getPassport().getPairMap().get("id");
 
-        return userId==null?null:new Integer(userId);
+        return userId == null ? null : new Integer(userId);
     }
 }
