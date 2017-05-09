@@ -15,7 +15,7 @@ import java.util.Properties;
 public final class JavaMailUtil {
 
     public static String myEmailAccount = "a373440955@163.com";
-    public static String myEmailPassword = "nishizhu";
+    public static String myEmailPassword = "xxxxxx";
     public static String myEmailSMTPHost = "smtp.163.com";
 
 
