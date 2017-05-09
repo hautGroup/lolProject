@@ -156,8 +156,24 @@
 		for update
 	</select>
 
+
+    <select id="findUserByNickname" resultMap="BASE-RESULT">
+        SELECT
+        *
+        FROM
+        user
+        WHERE
+        nickname = #{nickname}
+        for update
+    </select>
+
     <update id="updateHeadImage">
         update user set head_image = #{headImage}
+        where id = #{userId}
+    </update>
+
+    <update id="updateStatus">
+        update user set status = #{status}
         where id = #{userId}
     </update>
 

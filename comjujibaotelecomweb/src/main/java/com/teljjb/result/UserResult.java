@@ -26,7 +26,7 @@ public class UserResult implements Serializable{
 	
 	private Integer id;
 	private String nickname;
-	private String password;
+//	private String password;
 	private String email;
 	private String status;
 	private String headImage;
@@ -53,13 +53,13 @@ public class UserResult implements Serializable{
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	public String getPassword() {
-		return password;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
-	}
+//	public String getPassword() {
+//		return password;
+//	}
+//
+//	public void setPassword(String password) {
+//		this.password = password;
+//	}
 	public String getEmail() {
 		return email;
 	}

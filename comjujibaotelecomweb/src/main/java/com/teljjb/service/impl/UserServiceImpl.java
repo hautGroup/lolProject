@@ -34,6 +34,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserResult findUserResultByNickname(String nickname) {
+        User user = userDao.findUserByNickname(nickname);
+        if(user != null) {
+            UserResult userResult = new UserResult();
+            BeanUtilExt.copyProperties(userResult, user);
+            return userResult;
+        }
+        return null;
+    }
+
+    @Override
     @Transactional
     public UserResult register(String nickname, String phonenumber, String email, String password, String ip) throws
             BusinessException {
@@ -68,6 +79,11 @@ public class UserServiceImpl implements UserService {
             return userResult;
         }
         return null;
+    }
+
+    @Override
+    public Integer activeAccount(Integer id, String status) {
+        return userDao.updateStatus(id, status);
     }
 
     @Override

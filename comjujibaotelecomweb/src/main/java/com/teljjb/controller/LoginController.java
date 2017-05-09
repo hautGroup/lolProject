@@ -4,10 +4,7 @@ import com.teljjb.exception.BusinessException;
 import com.teljjb.response.BaseResponse;
 import com.teljjb.result.UserResult;
 import com.teljjb.service.api.UserService;
-import com.teljjb.util.EmailRegexUtil;
-import com.teljjb.util.ErrorCode;
-import com.teljjb.util.IpUtil;
-import com.teljjb.util.JavaMailUtil;
+import com.teljjb.util.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -98,6 +95,35 @@ public class LoginController extends BaseController {
             return mapiResult;
         }
 
+        return mapiResult;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/active/account")
+    public BaseResponse<UserResult> activeAccount(HttpServletRequest request, HttpServletResponse response) {
+        String nickname = request.getParameter("nickname");
+        String code = request.getParameter("code");
+        UserResult userResult = userService.findUserResultByNickname(nickname);
+        BaseResponse<UserResult> mapiResult = new BaseResponse<>();
+        mapiResult.setResult(userResult);
+        if(userResult == null) {
+            mapiResult.setCode(-1);
+            mapiResult.setMessage("无效的链接");
+        } else {
+            String code2 = MD5Util.getMD5Str("lol" + nickname + userResult.getId() + "lol");
+            if(!code2.equals(code)) {
+                mapiResult.setCode(-1);
+                mapiResult.setMessage("激活失败");
+            } else {
+                if(userService.activeAccount(userResult.getId(), "active") > 0) {
+                    mapiResult.setCode(1);
+                    mapiResult.setMessage("激活成功");
+                } else {
+                    mapiResult.setCode(-1);
+                    mapiResult.setMessage("您的账号已经激活过了。");
+                }
+            }
+        }
         return mapiResult;
     }
 

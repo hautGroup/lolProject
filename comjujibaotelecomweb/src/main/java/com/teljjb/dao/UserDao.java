@@ -22,6 +22,8 @@ public interface UserDao {
 
 	public User findUserById(Integer id);
 
+	public User findUserByNickname(String nickname);
+
 	public User findUserByEmailForupdate(String email);
 
 	public User findUserByNicknameForupdate(String nickname);
@@ -37,4 +39,6 @@ public interface UserDao {
 
 
     public Integer updateHeadImage(@Param("userId") Integer userId, @Param("headImage") String headImage);
+
+    public Integer updateStatus(@Param("userId") Integer userId, @Param("status") String status);
 }

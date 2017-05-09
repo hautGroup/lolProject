@@ -12,8 +12,13 @@ public interface UserService {
 
     UserResult findUserResultByEmail(String Email);
 
+    UserResult findUserResultByNickname(String nickname);
+
     UserResult register(String nickname, String phonenumber, String email, String password, String ip) throws
             BusinessException;
+
+    Integer activeAccount(Integer id, String status);
+
 
 
 
