@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by dezhonger on 2017/5/8.
  */
 @Controller
-public class TestController extends BaseController {
+public class UtilController extends BaseController {
 
     @Autowired
     private UserService userService;
