@@ -19,6 +19,8 @@ public interface UserService {
 
     Integer activeAccount(Integer id, String status);
 
+    UserResult userLogin(String nickname, String password) throws BusinessException;
+
 
 
 

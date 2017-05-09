@@ -28,6 +28,8 @@ public interface UserDao {
 
 	public User findUserByNicknameForupdate(String nickname);
 
+	public User findUserByNicknameAndPassword(@Param("nickname") String nickname, @Param("password") String password);
+
 	public Integer insert(User param);
 	
 	public Integer getUserCount(User param);

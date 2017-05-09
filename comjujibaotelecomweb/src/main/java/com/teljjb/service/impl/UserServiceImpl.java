@@ -2,10 +2,12 @@ package com.teljjb.service.impl;
 
 import com.teljjb.bean.User;
 import com.teljjb.dao.UserDao;
+import com.teljjb.entity.Constant;
 import com.teljjb.exception.BusinessException;
 import com.teljjb.result.UserResult;
 import com.teljjb.service.api.UserService;
 import com.teljjb.util.BeanUtilExt;
+import com.teljjb.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,7 +55,7 @@ public class UserServiceImpl implements UserService {
             throw new BusinessException(-9993, "nickname已存在");
         }
         User user1 = new User();
-        user1.setPassword(password);
+        user1.setPassword(MD5Util.getMD5Str(Constant.PREMD5 + password));
         user1.setCreateTime(new Date());
         user1.setUpdateTime(new Date());
         user1.setBindPhone(phonenumber);
@@ -84,6 +86,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer activeAccount(Integer id, String status) {
         return userDao.updateStatus(id, status);
+    }
+
+
+    @Override
+    public UserResult userLogin(String nickname, String password) throws BusinessException {
+        User user = userDao.findUserByNicknameAndPassword(nickname, password);
+        if(user == null) {
+            throw new BusinessException(-9999, "用户名或密码错误");
+        } else {
+            UserResult userResult = new UserResult();
+            BeanUtilExt.copyProperties(userResult, user);
+            return userResult;
+        }
     }
 
     @Override

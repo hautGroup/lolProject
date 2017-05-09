@@ -177,6 +177,12 @@
         where id = #{userId}
     </update>
 
+    <select id="findUserByNicknameAndPassword" resultMap="BASE-RESULT">
+        select *
+        from user
+        where nickname = #{nickname} and password = #{password}
+    </select>
+
 
   	 
   	 

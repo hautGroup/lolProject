@@ -1,5 +1,6 @@
 package com.teljjb.controller;
 
+import com.teljjb.entity.Constant;
 import com.teljjb.exception.BusinessException;
 import com.teljjb.response.BaseResponse;
 import com.teljjb.result.UserResult;
@@ -28,6 +29,13 @@ public class LoginController extends BaseController {
     private UserService userService;
 
 
+    /**
+     * 注册
+     * @param modelMap
+     * @param request
+     * @param response
+     * @return 用户信息
+     */
     @ResponseBody
     @RequestMapping(value = {"/register/post"})
     public BaseResponse<UserResult> registMobile(ModelMap modelMap, HttpServletRequest request,
@@ -72,6 +80,12 @@ public class LoginController extends BaseController {
         return mapiResult;
     }
 
+    /**
+     * 邮箱验证
+     * @param request
+     * @param response
+     * @return 是否成功
+     */
     @ResponseBody
     @RequestMapping(value = "/validateEmail")
     public BaseResponse<String> validateEmail(HttpServletRequest request, HttpServletResponse response) {
@@ -98,6 +112,12 @@ public class LoginController extends BaseController {
         return mapiResult;
     }
 
+    /**
+     * 邮箱激活账号
+     * @param request
+     * @param response
+     * @return 激活成功的用户信息
+     */
     @ResponseBody
     @RequestMapping(value = "/active/account")
     public BaseResponse<UserResult> activeAccount(HttpServletRequest request, HttpServletResponse response) {
@@ -127,6 +147,27 @@ public class LoginController extends BaseController {
         return mapiResult;
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "/login")
+    public BaseResponse<UserResult> login(HttpServletRequest request, HttpServletResponse response) {
+        BaseResponse<UserResult> mapiResult = new BaseResponse<>();
+        UserResult userResult = new UserResult();
+        String nickname = request.getParameter("nickname");
+        String password = request.getParameter("password");
+        try {
+            userResult = userService.userLogin(nickname, MD5Util.getMD5Str(Constant.PREMD5 + password));
+            mapiResult.setResult(userResult);
+        } catch (BusinessException e) {
+            mapiResult.setCode(e.getCode());
+            mapiResult.setMessage(e.getMessage());
+        } catch (Exception e) {
+            LOG.error("系统出错[LoginController.login],params : " , e);
+            mapiResult.setCode(ErrorCode.UNKONE_ERROR);
+            mapiResult.setMessage(ErrorCode.UNKONE_ERROR_MSG);
+        }
+        return mapiResult;
+    }
 
 
     @SuppressWarnings("rawtypes")
