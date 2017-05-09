@@ -1,8 +1,11 @@
 package com.teljjb.controller;
 
 import com.teljjb.response.BaseResponse;
+import com.teljjb.result.UserResult;
+import com.teljjb.service.api.UserService;
 import com.teljjb.util.IpUtil;
 import com.teljjb.util.JavaMailUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 public class TestController extends BaseController {
+
+    @Autowired
+    private UserService userService;
 
     @ResponseBody
     @RequestMapping(value = {"/ip"})
@@ -35,9 +41,12 @@ public class TestController extends BaseController {
                                    HttpServletResponse response) {
         BaseResponse<String> re = new BaseResponse<>();
         String email = request.getParameter("mail");
+        String nickname = request.getParameter("nickname");
+        UserResult userResult = userService.findUserResultByNickname(nickname);
         LOG.info("email = " + email);
         try {
-            JavaMailUtil.sendMail(email);
+            JavaMailUtil.sendForActive(email, userResult);
+//            JavaMailUtil.sendMail(email);
             re.setResult("success");
         } catch (Exception e) {
             re.setResult("fail");

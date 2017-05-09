@@ -129,7 +129,6 @@ public class LoginController extends BaseController {
 
 
 
-
     @SuppressWarnings("rawtypes")
     @ResponseBody
     @RequestMapping(value = "/upHeadImage")
