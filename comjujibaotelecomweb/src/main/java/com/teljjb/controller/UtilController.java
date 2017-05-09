@@ -34,7 +34,6 @@ public class UtilController extends BaseController {
         return re;
     }
 
-
     @ResponseBody
     @RequestMapping(value = {"/sendmail"})
     public BaseResponse<String> sendmail(ModelMap modelMap, HttpServletRequest request,
