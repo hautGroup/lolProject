@@ -133,7 +133,6 @@ public class LoginController extends BaseController {
         String code = request.getParameter("code");
         UserResult userResult = userService.findUserResultByNickname(nickname);
         BaseResponse<UserResult> mapiResult = new BaseResponse<>();
-        mapiResult.setResult(userResult);
         if (userResult == null) {
             mapiResult.setCode(-1);
             mapiResult.setMessage("无效的链接");
@@ -146,12 +145,14 @@ public class LoginController extends BaseController {
                 if (userService.activeAccount(userResult.getId(), "active") > 0) {
                     mapiResult.setCode(1);
                     mapiResult.setMessage("激活成功");
+                    userResult.setStatus("active");
                 } else {
                     mapiResult.setCode(-1);
                     mapiResult.setMessage("您的账号已经激活过了。");
                 }
             }
         }
+        mapiResult.setResult(userResult);
         return mapiResult;
     }
 
