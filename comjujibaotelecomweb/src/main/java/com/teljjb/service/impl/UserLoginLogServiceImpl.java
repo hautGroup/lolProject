@@ -33,8 +33,7 @@ public class UserLoginLogServiceImpl implements UserLoginLogService {
         userLoginLog.setLoginIp(ip);
         userLoginLog.setCreateTime(new Date());
         userLoginLog.setUpdateTime(new Date());
-        System.out.println("userLoginLog");
-        System.out.println(userLoginLogDao.insert(userLoginLog));
+        userLoginLogDao.insert(userLoginLog);
         UserLoginLogResult userLoginLogResult = new UserLoginLogResult();
         BeanUtilExt.copyProperties(userLoginLogResult, userLoginLog);
         return userLoginLogResult;
