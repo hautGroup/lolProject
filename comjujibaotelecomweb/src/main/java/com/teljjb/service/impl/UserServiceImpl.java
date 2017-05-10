@@ -1,7 +1,9 @@
 package com.teljjb.service.impl;
 
 import com.teljjb.bean.User;
+import com.teljjb.bean.UserLoginLog;
 import com.teljjb.dao.UserDao;
+import com.teljjb.dao.UserLoginLogDao;
 import com.teljjb.entity.Constant;
 import com.teljjb.exception.BusinessException;
 import com.teljjb.result.UserResult;
@@ -22,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private UserLoginLogDao userLoginLogDao;
 
     @Override
     public UserResult findUserResultById(Integer id) throws BusinessException {

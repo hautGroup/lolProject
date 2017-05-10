@@ -4,6 +4,7 @@ import com.teljjb.entity.Constant;
 import com.teljjb.exception.BusinessException;
 import com.teljjb.response.BaseResponse;
 import com.teljjb.result.UserResult;
+import com.teljjb.service.api.UserLoginLogService;
 import com.teljjb.service.api.UserService;
 import com.teljjb.util.*;
 import org.apache.commons.lang.StringUtils;
@@ -28,6 +29,9 @@ public class LoginController extends BaseController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserLoginLogService userLoginLogService;
 
 
     /**
@@ -159,8 +163,12 @@ public class LoginController extends BaseController {
         UserResult userResult = new UserResult();
         String nickname = request.getParameter("nickname");
         String password = request.getParameter("password");
+        String platform = request.getParameter("platform");
+        String deviceNumber = request.getParameter("deviceNumber");
+        System.out.println("login");
         try {
             userResult = userService.userLogin(nickname, MD5Util.getMD5Str(Constant.PREMD5 + password));
+            userLoginLogService.userLoginLog(userResult.getId(), platform, deviceNumber, IpUtil.getIp(request));
             mapiResult.setResult(userResult);
         } catch (BusinessException e) {
             mapiResult.setCode(e.getCode());
