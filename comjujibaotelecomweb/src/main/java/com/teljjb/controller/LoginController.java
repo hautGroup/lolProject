@@ -47,7 +47,7 @@ public class LoginController extends BaseController {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         String nickname = request.getParameter("nickname");
-        if (StringUtils.isEmpty(mobile)) {
+        if (StringUtils.isEmpty(mobile) || PhoneNumerRegexUtil.isPhoneLegal(mobile)) {
             mapiResult.setCode(-9997);
             mapiResult.setMessage("手机号不正确");
             return mapiResult;
