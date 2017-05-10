@@ -165,7 +165,6 @@ public class LoginController extends BaseController {
         String password = request.getParameter("password");
         String platform = request.getParameter("platform");
         String deviceNumber = request.getParameter("deviceNumber");
-        System.out.println("login");
         try {
             userResult = userService.userLogin(nickname, MD5Util.getMD5Str(Constant.PREMD5 + password));
             userLoginLogService.userLoginLog(userResult.getId(), platform, deviceNumber, IpUtil.getIp(request));
