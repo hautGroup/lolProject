@@ -34,12 +34,12 @@ ALTER TABLE `user`
 
 
 #用户签到记录
-CREATE TABLE `jjb_user_sign_in_record` (
- `id` int(11) NOT NULL AUTO_INCREMENT,
- `user_id` int(10) unsigned NOT NULL,
- `series_signed_times` int(10) DEFAULT '0' COMMENT '连续签到次数',
- `create_time` datetime NOT NULL COMMENT '创建时间',
- `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
- PRIMARY KEY (`id`),
- KEY `idx_jjb_user_sign_in_record_create_time` (`create_time`)
+CREATE TABLE `user_sign_in_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
+  `series_signed_times` int(10) DEFAULT '0' COMMENT '连续签到次数',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_user_sign_in_record_create_time` (`create_time`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='用户签到记录'
