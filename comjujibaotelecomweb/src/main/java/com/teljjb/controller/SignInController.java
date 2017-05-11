@@ -32,7 +32,7 @@ public class SignInController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = { "play" })
-    public BaseResponse<UserSignInRecordResult> playTask(HttpServletRequest request,
+    public BaseResponse<UserSignInRecordResult> playSignin(HttpServletRequest request,
                                                          HttpServletResponse response) {
         BaseResponse<UserSignInRecordResult> mapiResult = new BaseResponse<>();
         UserSignInRecordResult res = new UserSignInRecordResult();
@@ -44,7 +44,7 @@ public class SignInController extends BaseController {
             mapiResult.setCode(e.getCode());
             mapiResult.setMessage(e.getMessage());
         } catch (Exception e) {
-            LOG.error("系统出错[TaskController.playTask],params="
+            LOG.error("系统出错[SignInController.playSignin],params="
                             + SiteContextThreadLocal.get().getRequestBody(),
                     e);
             mapiResult.setCode(ErrorCode.UNKONE_ERROR);
