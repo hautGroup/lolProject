@@ -10,9 +10,9 @@ import java.util.regex.PatternSyntaxException;
 public final class PhoneNumerRegexUtil {
 
     public static void main(String[] args) {
-        System.out.println(isPhoneLegal("13655812579"));
+        System.out.println(isPhoneLegal("12345678910"));
         System.out.println(isPhoneLegal(""));
-        System.out.println(isPhoneLegal(null));
+//        System.out.println(isPhoneLegal(null));
     }
 
     /**

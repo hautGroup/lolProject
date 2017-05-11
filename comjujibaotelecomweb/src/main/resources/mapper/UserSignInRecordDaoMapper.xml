@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teljjb.dao.UserSignInRecordDao">
+
+	<resultMap id="BASE-RESULT" type="com.teljjb.bean.UserSignInRecord">
+		<result property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="seriesSignedTimes" column="series_signed_times" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<delete id="deleteUserSignInRecordById">
+		DELETE FROM user_sign_in_record WHERE id = #{id}
+	</delete>
+	
+	<select id="findUserSignInRecordById" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			user_sign_in_record
+		WHERE
+			id = #{id}
+	</select>
+	
+	<select id="getUserSignInRecordCount" parameterType="map" resultType="int">
+		SELECT 
+			count(*)
+		FROM 
+			user_sign_in_record
+		<where>
+  			<if test="id!=null">
+  				 id = #{id}
+  			</if>
+  			<if test="userId!=null">
+  				AND user_id = #{userId}
+  			</if>
+  			<if test="seriesSignedTimes!=null">
+  				AND series_signed_times = #{seriesSignedTimes}
+  			</if>
+  			<if test="createTime!=null">
+  				AND create_time = #{createTime}
+  			</if>
+  			<if test="updateTime!=null">
+  				AND update_time = #{updateTime}
+  			</if>
+		</where>
+	</select>
+	
+	<select id="findUserSignInRecordsByPage" parameterType="map" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			user_sign_in_record
+		<where>
+  			<if test="param.id!=null">
+  				 id = #{param.id}
+  			</if>
+  			<if test="param.userId!=null">
+  				AND user_id = #{param.userId}
+  			</if>
+  			<if test="param.seriesSignedTimes!=null">
+  				AND series_signed_times = #{param.seriesSignedTimes}
+  			</if>
+  			<if test="param.createTime!=null">
+  				AND create_time = #{param.createTime}
+  			</if>
+  			<if test="param.updateTime!=null">
+  				AND update_time = #{param.updateTime}
+  			</if>
+		</where>
+		LIMIT 
+			#{offset},#{rows}
+	</select>
+	
+  	<insert id="insert" parameterType="com.teljjb.bean.UserSignInRecord">
+  		INSERT INTO user_sign_in_record ( 
+			`id`,`user_id`,`series_signed_times`,`create_time`,`update_time`			
+  		) VALUES (
+			#{id},#{userId},#{seriesSignedTimes},#{createTime},#{updateTime}			
+  		)   
+    	<selectKey resultType="Integer" keyProperty="id">    
+      		SELECT LAST_INSERT_ID()     
+		</selectKey>
+  	</insert>
+  	 
+  	 
+</mapper>
