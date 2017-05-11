@@ -24,6 +24,12 @@ public class SignInController extends BaseController {
     @Autowired
     private SignInService signInService;
 
+    /**
+     * 用户签到
+     * @param request
+     * @param response
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = { "play" })
     public BaseResponse<UserSignInRecordResult> playTask(HttpServletRequest request,

@@ -2,7 +2,9 @@ package com.teljjb.dao;
 
 import com.teljjb.bean.UserSignInRecord;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +18,7 @@ import java.util.List;
  * @author com.ypn.mapi.generate
  * @version v1.0
  */
+@Repository
 public interface UserSignInRecordDao {
 
 	public UserSignInRecord findUserSignInRecordById(Integer id);
@@ -28,4 +31,6 @@ public interface UserSignInRecordDao {
 	
 	//if not use,pls delete it
 	public Integer deleteUserSignInRecordById(Integer id);
+
+    UserSignInRecord findUserSignInRecordByTime(Date date);
 }

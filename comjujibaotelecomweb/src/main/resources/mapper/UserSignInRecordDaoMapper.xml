@@ -85,6 +85,15 @@
       		SELECT LAST_INSERT_ID()     
 		</selectKey>
   	</insert>
+
+    <select id="findUserSignInRecordByTime" resultMap="BASE-RESULT">
+        SELECT
+        *
+        FROM
+        user_sign_in_record
+        WHERE
+        date(create_time) = #{date}
+    </select>
   	 
   	 
 </mapper>
