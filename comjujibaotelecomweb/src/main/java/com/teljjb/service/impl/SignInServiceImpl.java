@@ -23,7 +23,12 @@ public class SignInServiceImpl implements SignInService {
 
     @Override
     public UserSignInRecordResult playSignIn(Integer userId) throws BusinessException {
-        Date date = DateUtil.dateOnlyExt(new Date());
+        UserSignInRecord record = userSignInRecordDao.findUserSignInRecordByTime(DateUtil.dateOnlyExt(new Date()));
+        if(record != null) {
+            throw new BusinessException(-9998, "您今天已经签过到了!");
+        }
+
+        Date date = DateUtil.addDays(DateUtil.dateOnlyExt(new Date()), -1);
         UserSignInRecord userSignInRecord0 = userSignInRecordDao.findUserSignInRecordByTime(date);
         UserSignInRecord userSignInRecord = new UserSignInRecord();
         userSignInRecord.setUserId(userId);
