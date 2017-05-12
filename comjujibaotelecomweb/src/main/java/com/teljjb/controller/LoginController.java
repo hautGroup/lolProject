@@ -51,26 +51,13 @@ public class LoginController extends BaseController {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         String nickname = request.getParameter("nickname");
-        if (StringUtils.isEmpty(mobile) || !PhoneNumerRegexUtil.isPhoneLegal(mobile)) {
-            mapiResult.setCode(-9997);
-            mapiResult.setMessage("手机号不正确");
-            return mapiResult;
-        }
-        if (StringUtils.isEmpty(password)) {
-            mapiResult.setCode(-9996);
-            mapiResult.setMessage("密码不正确");
-            return mapiResult;
-        }
-        if (StringUtils.isEmpty(email) || !EmailRegexUtil.checkEmaile(email) || userService.findUserResultByEmail(email) != null) {
+
+        if (userService.findUserResultByEmail(email) != null) {
             mapiResult.setCode(-9995);
-            mapiResult.setMessage("电子邮箱不正确");
+            mapiResult.setMessage("该电子邮箱已经被注册");
             return mapiResult;
         }
-        if (StringUtils.isEmpty(nickname)) {
-            mapiResult.setCode(-9994);
-            mapiResult.setMessage("昵称不正确");
-            return mapiResult;
-        }
+
         try {
             UserResult result = userService.register(nickname, mobile, email, password, IpUtil.getIp(request));
             mapiResult.setResult(result);
