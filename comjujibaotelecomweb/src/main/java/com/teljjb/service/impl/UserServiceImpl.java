@@ -121,6 +121,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Boolean changeSigninStatus(Integer id, String status) throws BusinessException{
+        Integer cnt = userDao.updateSigninStatus(id, status);
+        return cnt > 0;
+    }
+
+    @Override
     public Boolean uploadHeadImage(String headImage, Integer userId) throws BusinessException {
         if (userDao.updateHeadImage(userId, headImage) > 0) {
             return true;

@@ -21,6 +21,8 @@ public interface UserService {
 
     UserResult userLogin(String nickname, String password) throws BusinessException;
 
+    Boolean changeSigninStatus(Integer id, String status) throws BusinessException;
+
 
 
 
