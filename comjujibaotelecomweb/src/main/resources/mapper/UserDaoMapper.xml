@@ -183,6 +183,11 @@
         where nickname = #{nickname} and password = #{password}
     </select>
 
+    <update id="updateSigninStatus">
+        update user set is_notfiy_sign = #{status}
+        where id = #{userId}
+    </update>
+
 
   	 
   	 
