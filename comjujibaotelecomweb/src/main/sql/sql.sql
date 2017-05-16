@@ -43,3 +43,32 @@ CREATE TABLE `user_sign_in_record` (
   PRIMARY KEY (`id`),
   KEY `idx_user_sign_in_record_create_time` (`create_time`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='用户签到记录'
+
+
+
+
+CREATE TABLE `plan` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自动编号',
+  `user_id` int(10) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `topic` varchar(15) NOT NULL DEFAULT '' COMMENT '主题',
+  `synopsis` varchar(255) NOT NULL DEFAULT '' COMMENT '计划简介',
+  `content` varchar(255) NOT NULL DEFAULT '' COMMENT '计划内容',
+  `end_time` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '到期时间',
+  `is_giveup` char(1) NOT NULL DEFAULT 'N' COMMENT '是否放弃',
+  `is_end` char(1) NOT NULL DEFAULT 'N' COMMENT '是否结束',
+  `create_time` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '创建/制定时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='用户计划表';
+
+CREATE TABLE `plan_schedule` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自动编号',
+  `plan_id` int(10) NOT NULL DEFAULT '0' COMMENT '计划ID',
+  `user_id` int(10) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `content` varchar(255) NOT NULL DEFAULT '' COMMENT '完成内容',
+  `percent` varchar(25) NOT NULL DEFAULT '' COMMENT '完成百分比',
+  `is_end` char(1) NOT NULL DEFAULT 'N' COMMENT '是否结束',
+  `create_time` datetime DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='用户计划进度表';
