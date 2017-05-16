@@ -1,9 +1,9 @@
 package com.teljjb.result;
 
-import java.io.Serializable;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -112,7 +112,7 @@ public class PlanResult implements Serializable{
 	* 重载toString方法
 	* @return
 	*
-	* @see java.lang.Object#toString()
+	* @see Object#toString()
 	*/
 	@Override
     public String toString() {

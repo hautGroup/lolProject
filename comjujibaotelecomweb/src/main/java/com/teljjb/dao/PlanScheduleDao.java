@@ -1,9 +1,9 @@
 package com.teljjb.dao;
 
-import java.util.List;
-import java.lang.Integer;
-import org.apache.ibatis.annotations.Param;
 import com.teljjb.bean.PlanSchedule;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  *
@@ -24,7 +24,7 @@ public interface PlanScheduleDao {
 	
 	public Integer getPlanScheduleCount(PlanSchedule param);
 	
-	public List<PlanSchedule> findPlanSchedulesByPage(@Param("param")PlanSchedule param,@Param("offset")Integer offset,@Param("rows")Integer rows);
+	public List<PlanSchedule> findPlanSchedulesByPage(@Param("param") PlanSchedule param, @Param("offset") Integer offset, @Param("rows") Integer rows);
 	
 	//if not use,pls delete it
 	public Integer deletePlanScheduleById(Integer id);
