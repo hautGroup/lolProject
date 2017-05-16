@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teljjb.dao.PlanDao">
+
+	<resultMap id="BASE-RESULT" type="com.teljjb.bean.Plan">
+		<result property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="topic" column="topic" />
+		<result property="synopsis" column="synopsis" />
+		<result property="content" column="content" />
+		<result property="endTime" column="end_time" />
+		<result property="isGiveup" column="is_giveup" />
+		<result property="isEnd" column="is_end" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<delete id="deletePlanById">
+		DELETE FROM plan WHERE id = #{id}
+	</delete>
+	
+	<select id="findPlanById" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			plan
+		WHERE
+			id = #{id}
+	</select>
+	
+	<select id="getPlanCount" parameterType="map" resultType="int">
+		SELECT 
+			count(*)
+		FROM 
+			plan
+		<where>
+  			<if test="id!=null">
+  				 id = #{id}
+  			</if>
+  			<if test="userId!=null">
+  				AND user_id = #{userId}
+  			</if>
+  			<if test="topic!=null">
+  				AND topic = #{topic}
+  			</if>
+  			<if test="synopsis!=null">
+  				AND synopsis = #{synopsis}
+  			</if>
+  			<if test="content!=null">
+  				AND content = #{content}
+  			</if>
+  			<if test="endTime!=null">
+  				AND end_time = #{endTime}
+  			</if>
+  			<if test="isGiveup!=null">
+  				AND is_giveup = #{isGiveup}
+  			</if>
+  			<if test="isEnd!=null">
+  				AND is_end = #{isEnd}
+  			</if>
+  			<if test="createTime!=null">
+  				AND create_time = #{createTime}
+  			</if>
+  			<if test="updateTime!=null">
+  				AND update_time = #{updateTime}
+  			</if>
+		</where>
+	</select>
+	
+	<select id="findPlansByPage" parameterType="map" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			plan
+		<where>
+  			<if test="param.id!=null">
+  				 id = #{param.id}
+  			</if>
+  			<if test="param.userId!=null">
+  				AND user_id = #{param.userId}
+  			</if>
+  			<if test="param.topic!=null">
+  				AND topic = #{param.topic}
+  			</if>
+  			<if test="param.synopsis!=null">
+  				AND synopsis = #{param.synopsis}
+  			</if>
+  			<if test="param.content!=null">
+  				AND content = #{param.content}
+  			</if>
+  			<if test="param.endTime!=null">
+  				AND end_time = #{param.endTime}
+  			</if>
+  			<if test="param.isGiveup!=null">
+  				AND is_giveup = #{param.isGiveup}
+  			</if>
+  			<if test="param.isEnd!=null">
+  				AND is_end = #{param.isEnd}
+  			</if>
+  			<if test="param.createTime!=null">
+  				AND create_time = #{param.createTime}
+  			</if>
+  			<if test="param.updateTime!=null">
+  				AND update_time = #{param.updateTime}
+  			</if>
+		</where>
+		LIMIT 
+			#{offset},#{rows}
+	</select>
+	
+  	<insert id="insert" parameterType="com.teljjb.bean.Plan">
+  		INSERT INTO plan ( 
+			`id`,`user_id`,`topic`,`synopsis`,`content`,`end_time`,`is_giveup`,`is_end`,`create_time`,`update_time`			
+  		) VALUES (
+			#{id},#{userId},#{topic},#{synopsis},#{content},#{endTime},#{isGiveup},#{isEnd},#{createTime},#{updateTime}			
+  		)   
+    	<selectKey resultType="Integer" keyProperty="id">    
+      		SELECT LAST_INSERT_ID()     
+		</selectKey>
+  	</insert>
+  	 
+  	 
+</mapper>

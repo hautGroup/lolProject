@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teljjb.dao.PlanScheduleDao">
+
+	<resultMap id="BASE-RESULT" type="com.teljjb.bean.PlanSchedule">
+		<result property="id" column="id" />
+		<result property="planId" column="plan_id" />
+		<result property="userId" column="user_id" />
+		<result property="content" column="content" />
+		<result property="percent" column="percent" />
+		<result property="isEnd" column="is_end" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<delete id="deletePlanScheduleById">
+		DELETE FROM plan_schedule WHERE id = #{id}
+	</delete>
+	
+	<select id="findPlanScheduleById" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			plan_schedule
+		WHERE
+			id = #{id}
+	</select>
+	
+	<select id="getPlanScheduleCount" parameterType="map" resultType="int">
+		SELECT 
+			count(*)
+		FROM 
+			plan_schedule
+		<where>
+  			<if test="id!=null">
+  				 id = #{id}
+  			</if>
+  			<if test="planId!=null">
+  				AND plan_id = #{planId}
+  			</if>
+  			<if test="userId!=null">
+  				AND user_id = #{userId}
+  			</if>
+  			<if test="content!=null">
+  				AND content = #{content}
+  			</if>
+  			<if test="percent!=null">
+  				AND percent = #{percent}
+  			</if>
+  			<if test="isEnd!=null">
+  				AND is_end = #{isEnd}
+  			</if>
+  			<if test="createTime!=null">
+  				AND create_time = #{createTime}
+  			</if>
+  			<if test="updateTime!=null">
+  				AND update_time = #{updateTime}
+  			</if>
+		</where>
+	</select>
+	
+	<select id="findPlanSchedulesByPage" parameterType="map" resultMap="BASE-RESULT">
+		SELECT 
+			* 
+		FROM 
+			plan_schedule
+		<where>
+  			<if test="param.id!=null">
+  				 id = #{param.id}
+  			</if>
+  			<if test="param.planId!=null">
+  				AND plan_id = #{param.planId}
+  			</if>
+  			<if test="param.userId!=null">
+  				AND user_id = #{param.userId}
+  			</if>
+  			<if test="param.content!=null">
+  				AND content = #{param.content}
+  			</if>
+  			<if test="param.percent!=null">
+  				AND percent = #{param.percent}
+  			</if>
+  			<if test="param.isEnd!=null">
+  				AND is_end = #{param.isEnd}
+  			</if>
+  			<if test="param.createTime!=null">
+  				AND create_time = #{param.createTime}
+  			</if>
+  			<if test="param.updateTime!=null">
+  				AND update_time = #{param.updateTime}
+  			</if>
+		</where>
+		LIMIT 
+			#{offset},#{rows}
+	</select>
+	
+  	<insert id="insert" parameterType="com.teljjb.bean.PlanSchedule">
+  		INSERT INTO plan_schedule ( 
+			`id`,`plan_id`,`user_id`,`content`,`percent`,`is_end`,`create_time`,`update_time`			
+  		) VALUES (
+			#{id},#{planId},#{userId},#{content},#{percent},#{isEnd},#{createTime},#{updateTime}			
+  		)   
+    	<selectKey resultType="Integer" keyProperty="id">    
+      		SELECT LAST_INSERT_ID()     
+		</selectKey>
+  	</insert>
+  	 
+  	 
+</mapper>
