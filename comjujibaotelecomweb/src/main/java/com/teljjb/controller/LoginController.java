@@ -58,6 +58,7 @@ public class LoginController extends BaseController {
             return mapiResult;
         }
 
+
         try {
             UserResult result = userService.register(nickname, mobile, email, password, IpUtil.getIp(request));
             mapiResult.setResult(result);
@@ -67,8 +68,15 @@ public class LoginController extends BaseController {
             mapiResult.setMessage(e.getMessage());
         } catch (Exception e) {
             LOG.error("系统出错[LoginController.registMobile],params : " + mobile + "," + password + ",smsCode", e);
-            mapiResult.setCode(ErrorCode.UNKONE_ERROR);
-            mapiResult.setMessage(ErrorCode.UNKONE_ERROR_MSG);
+            if(e.getMessage().equals("Invalid Addresses")) {
+                mapiResult.setCode(-9992);
+                mapiResult.setMessage(e.getMessage());
+            } else {
+                mapiResult.setCode(ErrorCode.UNKONE_ERROR);
+                mapiResult.setMessage(ErrorCode.UNKONE_ERROR_MSG);
+            }
+
+
         }
         return mapiResult;
     }
