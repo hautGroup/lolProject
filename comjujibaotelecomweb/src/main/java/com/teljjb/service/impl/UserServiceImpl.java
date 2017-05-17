@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isEmpty(email) || !EmailRegexUtil.checkEmaile(email)) {
             throw new BusinessException(-9995, "邮箱为空或格式不正确");
         }
-        if (StringUtils.isEmpty(nickname) || NicknameUtil.checkNickname(nickname)) {
+        if (StringUtils.isEmpty(nickname) || !NicknameUtil.checkNickname(nickname)) {
             throw new BusinessException(-9994, "昵称为空或格式不正确");
         }
 
