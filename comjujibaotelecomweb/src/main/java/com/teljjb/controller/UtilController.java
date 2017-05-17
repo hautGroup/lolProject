@@ -54,5 +54,14 @@ public class UtilController extends BaseController {
         return re;
     }
 
+    @ResponseBody
+    @RequestMapping(value = {"/time"})
+    public BaseResponse<String> time(ModelMap modelMap, HttpServletRequest request,
+                                   HttpServletResponse response) {
+        BaseResponse<String> re = new BaseResponse<>();
+        re.setResult("20170518");
+        return re;
+    }
+
 
 }
