@@ -2,6 +2,8 @@ package com.teljjb.controller;
 
 import com.teljjb.entity.ServiceContextThreadLocal;
 import com.teljjb.exception.BusinessException;
+import com.teljjb.result.UserResult;
+import com.teljjb.service.api.UserService;
 import com.teljjb.util.ShopImageHandler;
 import com.teljjb.util.StringUtil;
 import org.apache.log4j.Logger;
@@ -19,6 +21,9 @@ public class AppBaseController {
     @Autowired
     protected ShopImageHandler shopImageHandler;
 
+    @Autowired
+    private UserService userService;
+
     public static final String		CHECK_CODE	= "checkCode";
     public static final String		UNIQUE_ID	= "unique_id";
     public static final String		SESSION_ID	= "session_id";
@@ -28,28 +33,19 @@ public class AppBaseController {
 
     public Integer getCurrentUserId(HttpServletRequest request) throws BusinessException {
 
-        String userSessionId = ServiceContextThreadLocal.get().getUserSessionId();
+//        String userSessionId = ServiceContextThreadLocal.get().getUserSessionId();
         String userId = ServiceContextThreadLocal.get().getUserId();
         String platform = ServiceContextThreadLocal.get().getPlatform();
-        LOG.info("userId:" + userId + ",userSessionId:" + userSessionId);
-        if (StringUtil.isEmpty(userSessionId) || StringUtil.isEmpty(userId)) {
-//            throw new BusinessException(ErrorConstants.USER_LOGIN_AGAIN[0],
-//                    ErrorConstants.USER_LOGIN_AGAIN[1]);
+        String password = ServiceContextThreadLocal.get().getPassword();
+        LOG.info("userId:" + userId + ",userSessionId:" + password);
+        if (StringUtil.isEmpty(password) || StringUtil.isEmpty(userId)) {
             throw new BusinessException(-9999, "请重新登录！");
         }
-        //查询用户ID
-
-//        JjbBasicLoginUser loginUser=basicUserService.checkUserSessionForApp(Integer.parseInt(userId), userSessionId,platform);
-//
-//        LOG.info("userId:" + userId + ",userSessionId:" + userSessionId + "isLogin:" + loginUser.getIsLogin());
-//        if (loginUser.getIsLogin() == false) {
-//            throw new BusinessException(ErrorConstants.USER_LOGIN_AGAIN[0],
-//                    ErrorConstants.USER_LOGIN_AGAIN[1]);
-        if(false) {
-            throw new BusinessException(-9999, "请重新登录！");
+        UserResult user = userService.findUserByIdAndPass(Integer.parseInt(userId), password);
+        if(user.getStatus().equals("lock")) {
+            throw new BusinessException(-9999, "请激活您的用户！");
         }
-//        return Integer.parseInt(userId);
-        return 123456;
+        return user.getId();
 
     }
 

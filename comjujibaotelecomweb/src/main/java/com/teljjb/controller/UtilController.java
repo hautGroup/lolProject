@@ -1,5 +1,6 @@
 package com.teljjb.controller;
 
+import com.teljjb.exception.BusinessException;
 import com.teljjb.response.BaseResponse;
 import com.teljjb.result.UserResult;
 import com.teljjb.service.api.UserService;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by dezhonger on 2017/5/8.
  */
 @Controller
-public class UtilController extends BaseController {
+public class UtilController extends AppBaseController {
 
     @Autowired
     private UserService userService;
@@ -30,6 +31,11 @@ public class UtilController extends BaseController {
         BaseResponse<String> re = new BaseResponse<>();
         String ip = IpUtil.getIp(request);
         LOG.info("ip = " + ip);
+        try {
+            LOG.info("userId = " + getCurrentUserId(request));
+        } catch (BusinessException e) {
+            LOG.info("e = " + e);
+        }
         re.setResult(ip);
         return re;
     }

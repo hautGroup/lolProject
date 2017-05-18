@@ -18,6 +18,8 @@ import java.util.Map;
  */
 public class ServiceContext {
 
+    private String password; // 密码
+
     private String platform;        //平台
 
     private String time;            //每次客户端请求的时间,yyyyMMddHHmmss
@@ -116,6 +118,14 @@ public class ServiceContext {
 
     public void setReferer(String referer) {
         this.referer = referer;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

@@ -23,6 +23,8 @@ public interface UserService {
 
     Boolean changeSigninStatus(Integer id, String status) throws BusinessException;
 
+    UserResult findUserByIdAndPass(Integer userId, String password) throws BusinessException;
+
 
 
 

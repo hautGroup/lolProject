@@ -1,7 +1,6 @@
 package com.teljjb.service.impl;
 
 import com.teljjb.bean.User;
-import com.teljjb.bean.UserLoginLog;
 import com.teljjb.dao.UserDao;
 import com.teljjb.dao.UserLoginLogDao;
 import com.teljjb.entity.Constant;
@@ -124,6 +123,18 @@ public class UserServiceImpl implements UserService {
     public Boolean changeSigninStatus(Integer id, String status) throws BusinessException{
         Integer cnt = userDao.updateSigninStatus(id, status);
         return cnt > 0;
+    }
+
+    @Override
+    public UserResult findUserByIdAndPass(Integer userId, String password) throws BusinessException {
+        User user = userDao.findUserByUserIdAndPassword(userId, password);
+        if(user == null) {
+            throw new BusinessException(-9999, "密码已失效，请重新登录");
+        } else {
+            UserResult userResult = new UserResult();
+            BeanUtilExt.copyProperties(userResult, user);
+            return userResult;
+        }
     }
 
     @Override

@@ -42,33 +42,41 @@ public class ServiceContentFilter extends BaseFilter implements Filter {
 	@Override
 	public void doFilter(	ServletRequest request, ServletResponse response,
 							FilterChain chain) throws IOException, ServletException {
-		
-		HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
 		
 		String appkey = getHttpHeadOrParam(httpRequest, "appkey");
 		String time = getHttpHeadOrParam(httpRequest, "time");
 		String platform = getHttpHeadOrParam(httpRequest, "platform");
 		String userId = getHttpHeadOrParam(httpRequest, "userId");
 		String userSessionId = getHttpHeadOrParam(httpRequest, "userSessionId");
-		
+		String password = getHttpHeadOrParam(httpRequest, "password");
+
 		LOG.info("appkey:"+appkey);
+		LOG.info("time:"+time);
 		LOG.info("platform:"+platform);
-		
+		LOG.info("userId:"+userId);
+		LOG.info("userSessionId:"+userSessionId);
+		LOG.info("password:"+password);
+
+
+
+
 		String clientIp = getClientIp(httpRequest);//获取A10提供的真实客户数据
-		
+        System.out.println("userId = " + userId);
+        System.out.println("password = " + password);
+        System.out.println("platform = " + platform);
+        System.out.println("clientIp = " + clientIp);
 		if ("iphone".equals(platform)) {
 			platform = "ios";
 		}
-		//FIXME 临时处理下platform为空的情况
 		if (StringUtil.isEmpty(platform)) {
-			platform = "html5";
-			LOG.warn("platform null appkey=" + appkey);
+			platform = "wap";
 		}
-		String debug = getHttpHeadOrParam(httpRequest, "debug");
-		if (PropertiesHelp.getProperty("IS_MOCK").equals("Y") && "1".equals(debug)) {
-			appkey = "lJNkcCGdhW";//html5真实的
-			userSessionId = "55c47daae0a84cc39b1a7c79cbe8ce57";//70797
-		}
+//		String debug = getHttpHeadOrParam(httpRequest, "debug");
+//		if (PropertiesHelp.getProperty("IS_MOCK").equals("Y") && "1".equals(debug)) {
+//			appkey = "lJNkcCGdhW";//html5真实的
+//			userSessionId = "55c47daae0a84cc39b1a7c79cbe8ce57";//70797
+//		}
 		
 		@SuppressWarnings("rawtypes")
 		BaseResponse result = new BaseResponse();
@@ -82,6 +90,7 @@ public class ServiceContentFilter extends BaseFilter implements Filter {
 			context.setClientIp(clientIp);
 			context.setPlatform(platform);
 			context.setUserId(userId);
+            context.setPassword(password);
 			context.setUserSessionId(userSessionId);
 			context.setAppkey(appkey != null ? appkey : "");
 			context.setRequestBody(buildHttpBodytMap(httpRequest));

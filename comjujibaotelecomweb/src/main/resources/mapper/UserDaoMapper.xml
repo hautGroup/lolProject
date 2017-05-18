@@ -188,6 +188,12 @@
         where id = #{userId}
     </update>
 
+    <select id="findUserByUserIdAndPassword" resultMap="BASE-RESULT">
+        select *
+        from user
+        where id = #{id} and password = #{password}
+    </select>
+
 
   	 
   	 

@@ -45,4 +45,7 @@ public interface UserDao {
     public Integer updateStatus(@Param("userId") Integer userId, @Param("status") String status);
 
     public Integer updateSigninStatus(@Param("userId") Integer userId, @Param("status") String status);
+
+	public User findUserByUserIdAndPassword(@Param("id") Integer id, @Param("password") String password);
+
 }
