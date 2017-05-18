@@ -1,9 +1,11 @@
 package com.teljjb.controller;
 
+import com.teljjb.entity.Constant;
 import com.teljjb.entity.ServiceContextThreadLocal;
 import com.teljjb.exception.BusinessException;
 import com.teljjb.result.UserResult;
 import com.teljjb.service.api.UserService;
+import com.teljjb.util.MD5Util;
 import com.teljjb.util.ShopImageHandler;
 import com.teljjb.util.StringUtil;
 import org.apache.log4j.Logger;
@@ -41,7 +43,7 @@ public class AppBaseController {
         if (StringUtil.isEmpty(password) || StringUtil.isEmpty(userId)) {
             throw new BusinessException(-9999, "请重新登录！");
         }
-        UserResult user = userService.findUserByIdAndPass(Integer.parseInt(userId), password);
+        UserResult user = userService.findUserByIdAndPass(Integer.parseInt(userId), MD5Util.getMD5Str(Constant.PREMD5 + password));
         if(user.getStatus().equals("lock")) {
             throw new BusinessException(-9999, "请激活您的用户！");
         }

@@ -2,6 +2,7 @@ package com.teljjb.dao;
 
 import com.teljjb.bean.Plan;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * @author com.ypn.mapi.generate
  * @version v1.0
  */
+@Repository
 public interface PlanDao {
 
 	public Plan findPlanById(Integer id);

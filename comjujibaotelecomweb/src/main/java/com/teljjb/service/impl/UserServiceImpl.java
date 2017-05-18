@@ -91,6 +91,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserResult findUserResultByEmail(String Email)  {
         User user = userDao.findUserByEmailForupdate(Email);
         if(user != null) {
